@@ -49,7 +49,7 @@ The generator takes an OpenAPI specification and a custom JSON mapping file as i
 
 3.  **Install dependencies using `uv`:**
     ```bash
-    uv pip install -r requirements.txt
+    uv pip install .[dev,integration-test]  # Installs the package and dev/test dependencies
     ```
 
 ## Usage
