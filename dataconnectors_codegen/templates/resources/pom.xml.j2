@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>{{ group_id }}</groupId>
+    <artifactId>{{ artifact_id }}</artifactId>
+    <version>{{ version }}</version>
+    <packaging>jar</packaging>
+
+    <name>{{ connector_name }} Connector</name>
+    <!-- <description>Generated IDDM Connector for {{ connector_name }}</description> -->
+    <!-- <url>...</url> -->
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>{{ java_version }}</maven.compiler.source>
+        <maven.compiler.target>{{ java_version }}</maven.compiler.target>
+        <iddm.sdk.version>{{ iddm_sdk_version }}</iddm.sdk.version>
+        <okhttp.version>{{ okhttp_version }}</okhttp.version>
+        <jackson.version>{{ jackson_version }}</jackson.version>
+    </properties>
+
+    <dependencies>
+        <!-- IDDM Connector SDK -->
+        <dependency>
+            <groupId>com.radiantlogic.iddm</groupId>
+            <artifactId>iddm-connector-sdk</artifactId>
+            <version>${iddm.sdk.version}</version>
+            <scope>provided</scope> <!-- Provided by IDDM runtime -->
+        </dependency>
+
+        <!-- HTTP Client (OkHttp example) -->
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>${okhttp.version}</version>
+        </dependency>
+
+        <!-- JSON Processing (Jackson example) -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <!-- JSONPath for complex data extraction -->
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>{{ jsonpath_version }}</version>
+        </dependency>
+
+        <!-- Add other dependencies as needed (e.g., logging facade like slf4j-api) -->
+        <!--
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>...</version>
+        </dependency>
+        -->
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>{{ maven_compiler_plugin_version }}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>{{ maven_shade_plugin_version }}</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <!-- Optional: Filters to include/exclude specific dependencies -->
+                            <!--
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                            -->
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+             <!-- Optional: Add maven-jar-plugin for manifest configuration if needed -->
+             <!--
+             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>...</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            -->
+        </plugins>
+    </build>
+
+    <!-- Optional: Add repositories if SDK/dependencies are not in Maven Central -->
+    <!--
+    <repositories>
+        <repository>
+            <id>radiantlogic-releases</id>
+            <name>Radiant Logic Release Repository</name>
+            <url>...</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+             <id>radiantlogic-releases</id>
+             <name>Radiant Logic Release Repository</name>
+             <url>...</url>
+        </pluginRepository>
+    </pluginRepositories>
+    -->
+
+</project>

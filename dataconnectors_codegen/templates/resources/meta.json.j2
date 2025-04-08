@@ -1,0 +1,18 @@
+{
+  "name": "{{ connector_name }}",
+  "category": "{{ category }}",
+  "schemaExtractable": {{ schema_extractable | lower }},
+  "properties": [
+    {% for prop in properties -%}
+    {
+      "name": "{{ prop.name }}",
+      "label": "{{ prop.label }}",
+      "type": "{{ prop.type }}",
+      "required": {{ prop.required | lower }},
+      "description": "{{ prop.description | replace('"', '\\"') }}"{% if prop.default is defined and prop.default is not none %},
+      "defaultValue": "{{ prop.default | replace('"', '\\"') }}"
+      {% endif %}
+    }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ]
+}

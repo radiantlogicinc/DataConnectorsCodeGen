@@ -1,0 +1,31 @@
+{
+  "dnStructure": {
+    "baseDnSuffix": "dc=smoke,dc=example",
+    "rdnAttribute": "itemId"
+  },
+  "objectClasses": {
+    "smokeTestItem": {
+      "ldapName": "smokeTestItem",
+      "openApiSchemaName": "Item",
+      "apiEndpoint": "/items/{itemId}",
+      "primaryKeyLdapAttribute": "itemId",
+      "primaryKeyOpenApiParameterName": "itemId",
+      "attributes": [
+        {
+          "ldapName": "itemId",
+          "openApiPropertyName": "id",
+          "readOnly": true
+        },
+        {
+          "ldapName": "itemName",
+          "openApiPropertyName": "name"
+        },
+        {
+          "ldapName": "itemValue",
+          "openApiPropertyName": "value",
+           "typeOverride": "integer"
+        }
+      ]
+    }
+  }
+}

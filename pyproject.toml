@@ -1,0 +1,62 @@
+[project]
+name = "dataconnectors_codegen"
+version = "0.1.0"
+description = "Generate code for dataconnectors between Rest API endpoints and IDDM"
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+license = {text = "Apache 2.0"}
+authors = [
+    {name = "Dhar Rawal", email = "drawal@radiantlogic.com"}
+]
+
+dependencies = [
+    # Core dependencies
+    "click",
+    "jinja2",
+    "jsonschema",
+    "jsonpath-ng"
+]
+
+[project.optional-dependencies]
+dev = [
+    "black>=24.10.0",
+    "ruff>=0.0.265",
+    "mypy>=1.13.0",
+    "bandit>=1.7.10",
+    "pytest>=8.3.3",
+    "pytest-mock>=3.14.0"
+]
+integration-test = [
+    "pytest",             # Test runner
+    "pytest-httpserver",  # Mock HTTP server fixture
+    "pytest-docker",      # To start/stop LDAP container in Docker
+    "ldap3",              # For interacting with  from tests
+    # "requests",         # Uncomment if needed for tests making HTTP calls
+]
+
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["dataconnectors_codegen"]
+
+[tool.pylint]
+max-line-length = 135
+
+[tool.ruff]
+line-length = 135
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "PLC"]
+# Ignore redefined-outer-name in test files (equivalent to pylint W0621)
+per-file-ignores = { "tests/*" = ["RUF006"] }
+
+[tool.bandit]
+# Skip assertion checks (B101) for test files
+skips = ["B101"]
+exclude_dirs = [".git", "__pycache__", ".venv", ".pytest_cache"]
+
+
+

@@ -1,0 +1,127 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Minimal Smoke Test API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://smoke.example.com/api/v1"
+    }
+  ],
+  "paths": {
+    "/items": {
+      "get": {
+        "summary": "List items",
+        "operationId": "listItems",
+        "responses": {
+          "200": {
+            "description": "A list of items",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Item"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create item",
+        "operationId": "createItem",
+         "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                         "$ref": "#/components/schemas/ItemInput"
+                    }
+                }
+            }
+        },
+        "responses": {
+          "201": {
+            "description": "Item created",
+             "content": {
+              "application/json": {
+                "schema": {
+                   "$ref": "#/components/schemas/Item"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/items/{itemId}": {
+       "parameters": [
+        {
+          "name": "itemId",
+          "in": "path",
+          "required": true,
+          "schema": { "type": "string" }
+        }
+      ],
+       "get": {
+        "summary": "Get item by ID",
+        "operationId": "getItem",
+        "responses": {
+          "200": {
+            "description": "Single item",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Item"
+                }
+              }
+            }
+          }
+        }
+      },
+       "delete": {
+         "summary": "Delete item",
+         "operationId": "deleteItem",
+         "responses": {
+            "204": { "description": "Item deleted" }
+         }
+       }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Item": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "name": { "type": "string" },
+          "value": { "type": "integer" }
+        },
+         "required": ["id", "name"]
+      },
+       "ItemInput": {
+         "type": "object",
+         "properties": {
+            "name": { "type": "string" },
+            "value": { "type": "integer" }
+         },
+         "required": ["name"]
+       }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-KEY"
+      }
+    }
+  },
+   "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ]
+}

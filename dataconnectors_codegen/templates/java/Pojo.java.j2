@@ -1,0 +1,52 @@
+package {{ package_name }};
+
+// Generated POJO for {{ class_name }}
+
+{% for imp in imports %}
+import {{ imp }};
+{% endfor %}
+
+public class {{ class_name }} {
+
+    {% for field in fields %}
+    @JsonProperty("{{ field.original_name }}") // Added Jackson annotation
+    private {{ field.type }} {{ field.name }};
+    {% endfor %}
+
+    // Constructors (add NoArgsConstructor or AllArgsConstructor if needed, possibly via Lombok)
+    public {{ class_name }}() {
+    }
+
+    // Getters and Setters
+    {% for field in fields %}
+    public {{ field.type }} {{ field.getterName }}() {
+        return {{ field.name }};
+    }
+
+    public void {{ field.setterName }}({{ field.type }} {{ field.name }}) {
+        this.{{ field.name }} = {{ field.name }};
+    }
+    {% endfor %}
+
+    // equals, hashCode, toString
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        {{ class_name }} that = ({{ class_name }}) o;
+        return {% for field in fields %}Objects.equals({{ field.name }}, that.{{ field.name }}){% if not loop.last %} &&
+               {% endif %}{% endfor %};
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash({% for field in fields %}{{ field.name }}{% if not loop.last %}, {% endif %}{% endfor %});
+    }
+
+    @Override
+    public String toString() {
+        return "{{ class_name }}{" +
+               {% for field in fields %}"{{ field.name }}=" + {{ field.name }}{% if not loop.last %} + ", "{% endif %}{% endfor %} +
+               '}';
+    }
+}

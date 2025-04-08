@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+  Generated Schema Definition for IDDM Connector
+  NOTE: The ORX format might be deprecated. This template generates the
+        structure based on common ORX usage for custom connectors.
+-->
+<schemaDefinition xmlns="http://www.radiantlogic.com/ORX/xsd" version="1.2">
+  {% for oc in object_classes %}
+  <objectClass name="{{ oc.ldapName }}">
+    <!-- Example backendName - Adjust based on mapping/convention -->
+    <backendName>{{ oc.ldapName }}</backendName>
+    <attributes>
+      {% for attr in oc.attributes %}
+      <attribute name="{{ attr.ldapName }}">
+        <backendName>{{ attr.ldapName }}</backendName> <!-- Simple 1:1 mapping for now -->
+        <type>{{ attr.type }}</type>
+        {% if attr.primaryKey %}
+        <isPrimaryKey>true</isPrimaryKey>
+        {% endif %}
+        {% if attr.multiValued %}
+        <isMultiValued>true</isMultiValued>
+        {% endif %}
+        <!-- Add other potential flags like isReadOnly, isRequired based on context -->
+        <!--
+        <isRequired>false</isRequired>
+        <isReadOnly>false</isReadOnly>
+        -->
+        {% if attr.required is not none and attr.required %}
+        <isRequired>true</isRequired>
+        {% endif %}
+        {% if attr.readOnly is not none and attr.readOnly %}
+        <isReadOnly>true</isReadOnly>
+        {% endif %}
+      </attribute>
+      {% endfor %}
+    </attributes>
+    <!-- Optional: Define parentObjectClass, structural/auxiliary type if needed -->
+    <!--
+    <parentObjectClass>...</parentObjectClass>
+    <type>STRUCTURAL</type>
+    -->
+  </objectClass>
+  {% endfor %}
+</schemaDefinition>

@@ -1,0 +1,19 @@
+[
+    {
+      "case_id": "case_default",
+      "description": "Generate with default package name and Java version.",
+      "openapi": "./tests/smoke_test/inputs/minimal_openapi.json",
+      "mapping": "./tests/smoke_test/inputs/minimal_mapping.json",
+      "extra_args": []
+    },
+    {
+      "case_id": "case_custom_pkg_java17",
+      "description": "Generate with custom package name and Java 17.",
+      "openapi": "./tests/smoke_test/inputs/minimal_openapi.json",
+      "mapping": "./tests/smoke_test/inputs/minimal_mapping.json",
+      "extra_args": [
+        "--package-name", "com.smoketest.custom",
+        "--java-version", "17"
+      ]
+    }
+  ]
